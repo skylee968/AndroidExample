@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,20 +19,29 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.orangestudio.mobilereader.Adapter.NavAdapter;
+import com.orangestudio.mobilereader.CustomCompoundView.UserInfoControl;
+import com.orangestudio.mobilereader.Entity.UserEntity;
 import com.orangestudio.mobilereader.Fragment.AboutFragment;
 import com.orangestudio.mobilereader.Fragment.CategoryFragment;
 import com.orangestudio.mobilereader.Fragment.GuideFragment;
 import com.orangestudio.mobilereader.Fragment.HomeFragment;
 import com.orangestudio.mobilereader.Fragment.RatingFragment;
 import com.orangestudio.mobilereader.Fragment.SuggestBookFragment;
+import com.orangestudio.mobilereader.Model.UserModel;
 import com.orangestudio.mobilereader.NavigationServe.Constants;
 import com.orangestudio.mobilereader.NavigationServe.EntryItem;
 import com.orangestudio.mobilereader.NavigationServe.Item;
 import com.orangestudio.mobilereader.R;
+import com.orangestudio.mobilereader.Social.Auth;
+import com.orangestudio.mobilereader.Social.FacebookAuth;
+import com.orangestudio.mobilereader.Social.GoogleSocialAuth;
+import com.orangestudio.mobilereader.Social.SocialProfile;
 import com.orangestudio.mobilereader.Utils.RepeatSafeToast;
+import com.orangestudio.mobilereader.Utils.UserUtils;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements Auth.OnAuthListener {
 
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
@@ -42,24 +52,39 @@ public class HomeActivity extends BaseActivity {
     private DrawerLayout mDrawer = null;
     private ActionBarDrawerToggle mDrawerToggle;
     private View mUserInfoView = null;
+    private UserInfoControl mUserInfoControl;
 
+    /* Social login*/
+    public static final String USER_AUTHENTICATED   = "user_authenticated"; //value is a Boolean
+    public static final String USER_SOCIAL          = "user_social"; //value is a String and means user is logged with Social.FACEBOOK or Social.GOOGLE
+    public static final String PROFILE_NAME         = "profile_name";  //value is a String
+    public static final String PROFILE_EMAIL        = "profile_email";
+    public static final String PROFILE_IMAGE        = "profile_image";  //value is a String
+    public static final String PROFILE_COVER        = "profile_cover"; //value is a String
+
+    private GoogleSocialAuth mGoogleAuth;
+    private FacebookAuth mFacebookAuth;
+    private String mSocialNetwork;
+    /* End Social login*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__main);
         initViews();
+        initListener();
     }
 
     private void initViews() {
         mToolbar = (Toolbar) findViewById(R.id.os__base_tb_toolbar);
         setSupportActionBar(mToolbar);
 
-        mDrawer = (DrawerLayout) findViewById(R.id.os__base_dl_drawerlayout);
-        mDrawerList = (ListView) findViewById(R.id.os__base_lv_left_drawer);
-        mUserInfoView = getLayoutInflater().inflate(R.layout.mr__menu__item_user_info, null);
+        mDrawer             = (DrawerLayout) findViewById(R.id.os__base_dl_drawerlayout);
+        mDrawerList         = (ListView) findViewById(R.id.os__base_lv_left_drawer);
+        mUserInfoView       = getLayoutInflater().inflate(R.layout.mr__menu__item_user_info, null);
+        mUserInfoControl    = (UserInfoControl) mUserInfoView.findViewById(R.id.mr__mn_item_uiv_user_profile);
         mDrawerList.addHeaderView(mUserInfoView);
 
-        mDrawerAdapter = new NavAdapter(this, Constants.getInstance(this).getMenuData());
+        mDrawerAdapter      = new NavAdapter(this, Constants.getInstance(this).getMenuData());
         mDrawerList.setAdapter(mDrawerAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
@@ -78,8 +103,27 @@ public class HomeActivity extends BaseActivity {
         };
         mDrawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
-    }
 
+        /* init social*/
+        mGoogleAuth = new GoogleSocialAuth(this, this);
+        mFacebookAuth = new FacebookAuth(this, this);
+
+    }
+    private void initListener() {
+        mUserInfoControl.setOnUserInfoListener(new UserInfoControl.OnUserInfoListener() {
+            @Override
+            public void onLoginFbClick() {
+                mSocialNetwork  = SocialProfile.FACEBOOK;
+                mFacebookAuth.login();
+            }
+
+            @Override
+            public void onLoginGoogleClick() {
+                mSocialNetwork  = SocialProfile.GOOGLE;
+                mGoogleAuth.login();
+            }
+        });
+    }
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
         @Override
@@ -161,6 +205,17 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        checkUserInfo();
+    }
+    private void checkUserInfo() {
+        mUserInfo = UserUtils.getUserEntity();
+        if(mUserInfo != null) {
+            RepeatSafeToast.show(this, R.string.common_txt_login);
+        }
+    }
+    @Override
     public void onBackPressed() {
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             super.onBackPressed();
@@ -171,4 +226,61 @@ public class HomeActivity extends BaseActivity {
 
         mBackPressed = System.currentTimeMillis();
     }
+    /* Social login*/
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //disconnect google client api
+        mGoogleAuth.logout();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(mSocialNetwork != null) {
+            if(mSocialNetwork.equals(SocialProfile.GOOGLE) && requestCode == GoogleSocialAuth.GOOGLE_SIGN_IN){
+                if(resultCode == RESULT_OK) {
+                    //call connect again because google just authorized app
+                    mGoogleAuth.login();
+                } else {
+                    onLoginCancel();
+                }
+            }
+            if(mSocialNetwork.equals(SocialProfile.FACEBOOK)) {
+                mFacebookAuth.getFacebookCallbackManager().onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
+    @Override
+    public void onLoginSuccess(SocialProfile profile) {
+        Gson gson = new Gson();
+        Log.e("USER PROFILE", gson.toJson(profile));
+        saveAuthenticatedUser(profile);
+        checkUserInfo();
+//        Intent intent = new Intent(this, HomeActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+    }
+
+    @Override
+    public void onLoginError(String message) {
+        Log.e("teste", message);
+    }
+
+    @Override
+    public void onLoginCancel() {}
+
+    @Override
+    public void onRevoke() {}
+
+    private void saveAuthenticatedUser(SocialProfile profile){
+        UserEntity user = new UserEntity();
+        user.setName(profile.getName());
+        user.setEmail(profile.getEmail());
+        user.setAvatar(profile.getImage());
+
+        com.orangestudio.mobilereader.Global.Constants.mUserInfo = user;
+        UserModel.getInstance().saveUserEntity(user);
+    }
+    /* End social login*/
 }

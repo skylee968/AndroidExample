@@ -19,7 +19,7 @@ import com.orangestudio.mobilereader.R;
 /**
  * Created by thienlm on 8/18/2015.
  */
-public class UserInfoControl extends RelativeLayout {
+public class UserInfoControl extends RelativeLayout implements View.OnClickListener {
 
     private Context mContext;
     private ViewGroup mRootView;
@@ -41,8 +41,13 @@ public class UserInfoControl extends RelativeLayout {
     private UserEntity mUserInfo = null;
     private OnUserInfoListener mOnUserInfoListener;
 
+    public void setOnUserInfoListener(OnUserInfoListener mOnUserInfoListener) {
+        this.mOnUserInfoListener = mOnUserInfoListener;
+    }
+
     public interface OnUserInfoListener {
-        void onLoginClick();
+        void onLoginFbClick();
+        void onLoginGoogleClick();
     }
     public UserInfoControl(Context context) {
         super(context);
@@ -67,23 +72,42 @@ public class UserInfoControl extends RelativeLayout {
     private void initView(Context context) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mRootView = (ViewGroup) inflater.inflate(R.layout.mr__cpv_user_info, this, true);
+        mRootView               = (ViewGroup) inflater.inflate(R.layout.mr__cpv_user_info, this, true);
 
-        mCover = (ImageView)mRootView.findViewById(R.id.mr__cpv_uic_iv_cover);
-        mUserInfoLayout = findViewById(R.id.mr__cpv_uic_ll_user_info_layout);
-        mLoginLayout = findViewById(R.id.mr__cpv_uic_ll_login_layout);
+        mCover                  = (ImageView)mRootView.findViewById(R.id.mr__cpv_uic_iv_cover);
+        mUserInfoLayout         = findViewById(R.id.mr__cpv_uic_ll_user_info_layout);
+        mLoginLayout            = findViewById(R.id.mr__cpv_uic_ll_login_layout);
 
-        ciAvatar = (CircleImage) mRootView.findViewById(R.id.mr__cpv_uic_ci_user_avatar);
-        ciNotify = (CircleImage) mRootView.findViewById(R.id.mr__cpv_uic_ci_user_notify);
-        btnAction = (Button) mRootView.findViewById(R.id.mr__cpv_uic_btn_logout);
-        tvUserName = (TextView) mRootView.findViewById(R.id.mr__cpv_uic_tv_user_name);
-        tvCoin = (TextView) mRootView.findViewById(R.id.mr__cpv_uic_tv_user_coin);
+        ciAvatar                = (CircleImage) mRootView.findViewById(R.id.mr__cpv_uic_ci_user_avatar);
+        ciNotify                = (CircleImage) mRootView.findViewById(R.id.mr__cpv_uic_ci_user_notify);
+        btnAction               = (Button) mRootView.findViewById(R.id.mr__cpv_uic_btn_logout);
+        tvUserName              = (TextView) mRootView.findViewById(R.id.mr__cpv_uic_tv_user_name);
+        tvCoin                  = (TextView) mRootView.findViewById(R.id.mr__cpv_uic_tv_user_coin);
 
-        ibFaceLogin = (ImageButton) mRootView.findViewById(R.id.mr__cpv_uic_fb_login);
-        ibGoolgeLogin = (ImageButton) mRootView.findViewById(R.id.mr__cpv_uic_google_login);
+        ibFaceLogin             = (ImageButton) mRootView.findViewById(R.id.mr__cpv_uic_fb_login);
+        ibGoolgeLogin           = (ImageButton) mRootView.findViewById(R.id.mr__cpv_uic_google_login);
 
+        initListener();
+    }
+    private void initListener() {
+        ibFaceLogin.setOnClickListener(this);
+        ibGoolgeLogin.setOnClickListener(this);
     }
 
-
-
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.mr__cpv_uic_fb_login:
+                if(mOnUserInfoListener != null) {
+                    mOnUserInfoListener.onLoginFbClick();
+                }
+                break;
+            case R.id.mr__cpv_uic_google_login:
+                if(mOnUserInfoListener != null) {
+                    mOnUserInfoListener.onLoginGoogleClick();
+                }
+                break;
+        }
+    }
 }

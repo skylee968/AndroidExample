@@ -34,6 +34,9 @@ public class UserEntity {
 
 
 	private String deviceId;
+
+	private String avatar;
+
 	public UserEntity(){
 		
 	}
@@ -106,5 +109,12 @@ public class UserEntity {
 
 	public void setGender(boolean gender) {
 		this.gender = gender;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.orangestudio.mobilereader.Entity.BookEntity;
 import com.orangestudio.mobilereader.Entity.CategoryEntity;
+import com.orangestudio.mobilereader.Entity.UserEntity;
 import com.orangestudio.mobilereader.Global.AppConfig;
 import com.orangestudio.mobilereader.Utils.BookUtils;
 
@@ -15,6 +16,8 @@ import com.orangestudio.mobilereader.Utils.BookUtils;
 public class BaseActivity extends AppCompatActivity {
     private BookEntity mCurrnentBook;
     private CategoryEntity mCategory;
+
+    protected UserEntity mUserInfo;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
