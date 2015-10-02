@@ -8,22 +8,23 @@ import android.view.ViewGroup;
 
 import com.orangestudio.mobilereader.R;
 
-public class HomeFragment extends Fragment {
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+public class HomeFragment extends BaseFragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if(mView == null) {
+            mView = inflater.inflate(R.layout.fragment_home, container, false);
+            initView();
+            initListener();
+        } else if(mView.getParent() != null) {
+            ((ViewGroup) mView.getParent()).removeView(mView);
+        }
+        return mView;
     }
+    private void initView() {
 
+    }
+    private void initListener() {
 
-
-
+    }
 }

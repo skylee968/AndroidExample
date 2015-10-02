@@ -32,9 +32,9 @@ public class Constants {
 
         items.add(new SectionItem());
         items.add(new EntryItem(ctx.getString(R.string.mr__mn_settings), null, BookInfoActivity.class, 2));
-        items.add(new EntryItem(ctx.getString(R.string.mr__mn_rating_app), null, BookInfoActivity.class, 2));
-        items.add(new EntryItem(ctx.getString(R.string.mr__mn_guide), null, BookInfoActivity.class, 2));
-        items.add(new EntryItem(ctx.getString(R.string.mr__mn_about), null, BookInfoActivity.class, 2));
+        items.add(new EntryItem(ctx.getString(R.string.mr__mn_rating_app), null, BookInfoActivity.class, 1));
+        items.add(new EntryItem(ctx.getString(R.string.mr__mn_guide), null, BookInfoActivity.class, 1));
+        items.add(new EntryItem(ctx.getString(R.string.mr__mn_about), null, BookInfoActivity.class, 1));
 
     }
 

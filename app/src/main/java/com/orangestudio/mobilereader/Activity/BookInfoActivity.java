@@ -2,7 +2,6 @@ package com.orangestudio.mobilereader.Activity;
 
 import android.graphics.Color;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.widget.ImageView;
 
 import com.orangestudio.mobilereader.R;
 
-public class BookInfoActivity extends AppCompatActivity {
+public class BookInfoActivity extends BaseActivity {
 
     private CollapsingToolbarLayout mCollapsingToolbar = null;
     private ImageView ivBookCover = null;

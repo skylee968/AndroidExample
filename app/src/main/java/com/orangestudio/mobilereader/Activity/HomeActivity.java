@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -20,14 +19,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.orangestudio.mobilereader.Adapter.NavAdapter;
+import com.orangestudio.mobilereader.Fragment.AboutFragment;
+import com.orangestudio.mobilereader.Fragment.CategoryFragment;
+import com.orangestudio.mobilereader.Fragment.GuideFragment;
 import com.orangestudio.mobilereader.Fragment.HomeFragment;
+import com.orangestudio.mobilereader.Fragment.RatingFragment;
+import com.orangestudio.mobilereader.Fragment.SuggestBookFragment;
 import com.orangestudio.mobilereader.NavigationServe.Constants;
 import com.orangestudio.mobilereader.NavigationServe.EntryItem;
 import com.orangestudio.mobilereader.NavigationServe.Item;
 import com.orangestudio.mobilereader.R;
 import com.orangestudio.mobilereader.Utils.RepeatSafeToast;
 
-public class ActivityMain extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
@@ -103,22 +107,37 @@ public class ActivityMain extends AppCompatActivity {
 
         if (item.getClassType() == 1) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            Fragment temp = null;
+            Fragment fragment = null;
 
             switch (pos) {
                 case 1:
-                    temp = new HomeFragment();
+                    fragment = new SuggestBookFragment();
                     break;
                 case 2:
-                    temp = new HomeFragment();
+                    fragment = new HomeFragment();
+                    break;
+                case 3:
+                    fragment = new CategoryFragment();
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    fragment = new RatingFragment();
+                    break;
+                case 7:
+                    fragment = new GuideFragment();
+                    break;
+                case 8:
+                    fragment = new AboutFragment();
                     break;
                 default:
-                    temp = new HomeFragment();
+                    fragment = new HomeFragment();
                     break;
             }
 
-
-            transaction.replace(R.id.os__base_frame, temp);
+            transaction.replace(R.id.os__base_frame, fragment);
             transaction.commit();
         } else if (item.getClassType() == 2) {
             Class<?> navigationClass = item.getClassName();

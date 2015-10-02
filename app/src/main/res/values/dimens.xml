@@ -12,6 +12,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="mr__category_size_width_list_view">77dp</dimen>
+    <dimen name="mr__category_size_height_list_view">77dp</dimen>
 
+    <!-- Item book row -->
+    <dimen name="item_book_row_width">110dp</dimen>
+    <dimen name="item_book_row_height">140dp</dimen>
 
 </resources>
