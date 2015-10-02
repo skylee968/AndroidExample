@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="#d77d00"
+    android:clickable="true"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/mr__cpv_uic_iv_cover"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+         />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/mr__cpv_uic_ll_user_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/mr__default_item_padding">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <FrameLayout
+                    android:id="@+id/mr__cpv_uic_fl_user_avatar_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true">
+
+                    <com.orangestudio.mobilereader.CustomCompoundView.CircleImage
+                        android:id="@+id/mr__cpv_uic_ci_user_avatar"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/mr__ic_default_user_profile" />
+
+                    <com.orangestudio.mobilereader.CustomCompoundView.CircleImage
+                        android:id="@+id/mr__cpv_uic_ci_user_notify"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right|bottom"
+                        android:background="@android:color/white"
+                        android:src="@drawable/mr__ic_notify" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/mr__cpv_uic_fl_user_avatar_layout"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <Button
+                        android:id="@+id/mr__cpv_uic_btn_logout"
+                        style="@style/MR__LoginButtonStyle"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mr__btn_logout" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/mr__default_item_padding">
+
+                <TextView
+                    android:id="@+id/mr__cpv_uic_tv_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/app_name"
+                    android:textAppearance="@android:style/TextAppearance.Medium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mr__ui_coin"
+                        android:textAppearance="@android:style/TextAppearance.Small"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:id="@+id/mr__cpv_uic_tv_user_coin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/mr__default_item_padding"
+                        android:text="@string/app_name"
+                        android:textAppearance="@android:style/TextAppearance.Small"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Layout login -->
+        <LinearLayout
+            android:id="@+id/mr__cpv_uic_ll_login_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+               >
+
+                <ImageButton
+
+
+                    android:id="@+id/mr__cpv_uic_fb_login"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/mr__ic_fb" />
+
+                <ImageButton
+                    android:layout_toRightOf="@id/mr__cpv_uic_fb_login"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/mr__cpv_uic_google_login"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/mr__ic_google" />
+            </RelativeLayout>
+
+            <View
+                android:layout_margin="10dp"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="@color/os__primary_color" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/mr__tv_login_type"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+</FrameLayout>

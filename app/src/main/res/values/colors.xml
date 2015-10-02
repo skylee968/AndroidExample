@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="os__primary_color">#FB8C00</color>
+    <color name="os__primary_dark_color">#F57C00</color>
+
+    <!-- hover -->
+    <color name="os__flat_pressed">#c3c3c3</color>
+    <color name="os__flat_selected">#f6f6f6</color>
+    <color name="os__normal_pressed">#e0e0e1</color>
+
+    <!-- Item -->
+    <color name="os__item_divider">#D3D3D3</color>
+    <color name="os__item_title">#323232</color>
+    <color name="accent_material_light_1">#fb8c00</color>
+    <color name="accent_material_light">#fb8c00</color>
+
+
+</resources>

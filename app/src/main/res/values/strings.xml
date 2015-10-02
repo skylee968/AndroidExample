@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">MobileReader</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Search -->
+    <string name="os__base_search_hint">Nhập từ khoá&#8230;</string>
+
+
+    <!-- Navigation Data -->
+    <string name="mr__mn_home">Trang chủ</string>
+    <string name="mr__mn_my_book">Sách của tôi</string>
+    <string name="mr__mn_book_cate">Danh mục sách</string>
+    <string name="mr__mn_settings">Cài đặt</string>
+    <string name="mr__mn_rating_app">Bình chọn</string>
+    <string name="mr__mn_guide">Hướng dẫn</string>
+    <string name="mr__mn_about">Giới thiệu</string>
+
+    <!-- Login layout -->
+    <string name="mr__tv_login_type">Vui lòng chọn hình thức đăng nhập</string>
+
+
+    <!-- User info -->
+    <string name="mr__ui_coin">Xu:</string>
+
+
+    <!-- Button name -->
+    <string name="mr__btn_login">Đăng nhập</string>
+    <string name="mr__btn_logout">Đăng xuất</string>
+
+   <!-- Message -->
+    <string name="mr__mess_double_click_exit">Bấm nút back thêm lần nữa để thoát.</string>
+
+
+
+</resources>

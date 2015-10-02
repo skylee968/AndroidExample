@@ -1,0 +1,39 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+
+        <!-- Customize your theme here. -->
+    </style>
+
+
+    <!-- Login button style -->
+    <style name="MR__LoginButtonStyle" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/os__base_button_style</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@drawable/mr__text_selector</item>
+        <item name="android:textSize">18sp</item>
+
+    </style>
+
+    <style name="MobileReaderTheme" parent="@style/Theme.AppCompat.Light.NoActionBar" >
+        <item name="colorAccent">@color/accent_material_light_1</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- CollapsingToolBar -->
+    <style name="mr__ExpandedAppbarStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/abc_text_size_title_material_toolbar</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="mr__CollapsedAppbarStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/abc_text_size_title_material_toolbar</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>
